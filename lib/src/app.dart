@@ -5,6 +5,9 @@ import 'dart:convert';
 import 'widgets/image_list.dart';
 
 class App extends StatefulWidget {
+  const App({super.key});
+
+  @override
   createState() {
     return AppState();
   }
@@ -17,23 +20,24 @@ class AppState extends State<App> {
   void fetchImage() async {
     counter++;
     var response = await get(
-        'https://jsonplaceholder.typicode.com/photos/$counter' as Uri);
+        Uri.parse("https://jsonplaceholder.typicode.com/photos/$counter"));
     var imageModel = ImageModel.fromJson(json.decode(response.body));
     setState(() {
       images.add(imageModel);
     });
   }
 
+  @override
   Widget build(context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Lets see some images!'),
+          title: const Text('Lets see some images!'),
         ),
         body: ImageList(images),
         floatingActionButton: FloatingActionButton(
           onPressed: fetchImage,
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
       ),
     );
